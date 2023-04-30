@@ -19,6 +19,9 @@ func NewPageLoadHTTPFetcher(fetchSeconds int) *PageLoadHTTPFetcher {
 }
 
 func (fetcher *PageLoadHTTPFetcher) Get(ctx context.Context, url string) (io.ReadCloser, error) {
+	ctx, cancel := chromedp.NewContext(ctx)
+	defer cancel()
+
 	var htmlContent string
 
 	err := chromedp.Run(ctx,
